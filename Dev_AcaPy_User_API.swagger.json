@@ -6138,59 +6138,733 @@
                 }
             }
         },
-        "/multitenancy/wallet/{wallet_id}/token": {
+        "/transaction/{tran_id}/resend": {
             "post": {
-                "description": "This is to rotate the wallet token of AcaPy Agent",
-                "operationId": "rotate-token",
-                "summary": "Rotate Wallet Token",
+                "description": "For Author to resend a particular transaction request",
+                "operationId": "post-transaction-tran_id-resend",
+                "summary": "For Author to resend a particular transaction request",
+                "tags": [
+                    "endorse-transaction"
+                ],
                 "parameters": [
                     {
-                        "name": "wallet_id",
+                        "name": "tran_id",
                         "in": "path",
-                        "description": "",
+                        "description": "Transaction identifier",
                         "required": true,
                         "type": "string"
                     }
                 ],
+                "produces": [
+                    "application/json"
+                ],
                 "responses": {
                     "200": {
-                        "description": null
+                        "description": "null",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionRecord"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "_type": "101",
+                                "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "created_at": "2021-12-31 23:59:59Z",
+                                "endorser_write_txn": true,
+                                "formats": [
+                                    {
+                                        "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "format": "dif/endorse-transaction/request@v1.0"
+                                    }
+                                ],
+                                "messages_attach": [
+                                    {
+                                        "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                                        "data": {
+                                            "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                                        },
+                                        "mime-type": "application/json"
+                                    }
+                                ],
+                                "signature_request": [
+                                    {
+                                        "author_goal_code": "transaction.ledger.write",
+                                        "context": "did:sov",
+                                        "method": "add-signature",
+                                        "signature_type": "<requested signature type>",
+                                        "signer_goal_code": "transaction.endorse"
+                                    }
+                                ],
+                                "signature_response": [
+                                    {
+                                        "context": "did:sov",
+                                        "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "method": "add-signature",
+                                        "signer_goal_code": "transaction.refuse"
+                                    }
+                                ],
+                                "state": "active",
+                                "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "timing": {
+                                    "expires_time": "2020-12-13T17:29:06+00:00"
+                                },
+                                "trace": true,
+                                "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "updated_at": "2021-12-31 23:59:59Z"
+                            }
+                        }
                     }
                 }
             }
         },
-        "/status/live": {
+        "/transactions": {
             "get": {
-                "description": "This is to get the liveliness of AcaPy Agent",
-                "operationId": "status-liveliness",
-                "summary": "Liveliness Check",
+                "description": "Query transactions",
+                "operationId": "get-transactions",
+                "summary": "Query transactions",
+                "tags": [
+                    "endorse-transaction"
+                ],
+                "produces": [
+                    "application/json"
+                ],
                 "responses": {
                     "200": {
-                        "description": null
+                        "description": "null",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionList"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "results": [
+                                    {
+                                        "_type": "101",
+                                        "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "created_at": "2021-12-31 23:59:59Z",
+                                        "endorser_write_txn": true,
+                                        "formats": [
+                                            {
+                                                "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                                "format": "dif/endorse-transaction/request@v1.0"
+                                            }
+                                        ],
+                                        "messages_attach": [
+                                            {
+                                                "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                                                "data": {
+                                                    "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                                                },
+                                                "mime-type": "application/json"
+                                            }
+                                        ],
+                                        "signature_request": [
+                                            {
+                                                "author_goal_code": "transaction.ledger.write",
+                                                "context": "did:sov",
+                                                "method": "add-signature",
+                                                "signature_type": "<requested signature type>",
+                                                "signer_goal_code": "transaction.endorse"
+                                            }
+                                        ],
+                                        "signature_response": [
+                                            {
+                                                "context": "did:sov",
+                                                "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                                "method": "add-signature",
+                                                "signer_goal_code": "transaction.refuse"
+                                            }
+                                        ],
+                                        "state": "active",
+                                        "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "timing": {
+                                            "expires_time": "2020-12-13T17:29:06+00:00"
+                                        },
+                                        "trace": true,
+                                        "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "updated_at": "2021-12-31 23:59:59Z"
+                                    }
+                                ]
+                            }
+                        }
                     }
                 }
             }
         },
-        "/status": {
-            "get": {
-                "description": "This is to get the status of AcaPy Agent",
-                "operationId": "status",
-                "summary": "Server Status",
+        "/transactions/create-request": {
+            "post": {
+                "description": "For author to send a transaction request",
+                "operationId": "post-transactions-create-request-tran_id-tran_id",
+                "summary": "For author to send a transaction request",
+                "tags": [
+                    "endorse-transaction"
+                ],
+                "parameters": [
+                    {
+                        "name": "tran_id",
+                        "in": "query",
+                        "description": "Transaction identifier",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "endorser_write_txn",
+                        "in": "query",
+                        "description": "Endorser will write the transaction after endorsing it",
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "date",
+                        "in": "body",
+                        "schema": {
+                            "$ref": "#/definitions/Date"
+                        }
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
                 "responses": {
                     "200": {
-                        "description": null
+                        "description": "null",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionRecord"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "_type": "101",
+                                "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "created_at": "2021-12-31 23:59:59Z",
+                                "endorser_write_txn": true,
+                                "formats": [
+                                    {
+                                        "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "format": "dif/endorse-transaction/request@v1.0"
+                                    }
+                                ],
+                                "messages_attach": [
+                                    {
+                                        "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                                        "data": {
+                                            "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                                        },
+                                        "mime-type": "application/json"
+                                    }
+                                ],
+                                "signature_request": [
+                                    {
+                                        "author_goal_code": "transaction.ledger.write",
+                                        "context": "did:sov",
+                                        "method": "add-signature",
+                                        "signature_type": "<requested signature type>",
+                                        "signer_goal_code": "transaction.endorse"
+                                    }
+                                ],
+                                "signature_response": [
+                                    {
+                                        "context": "did:sov",
+                                        "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "method": "add-signature",
+                                        "signer_goal_code": "transaction.refuse"
+                                    }
+                                ],
+                                "state": "active",
+                                "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "timing": {
+                                    "expires_time": "2020-12-13T17:29:06+00:00"
+                                },
+                                "trace": true,
+                                "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "updated_at": "2021-12-31 23:59:59Z"
+                            }
+                        }
                     }
                 }
             }
         },
-        "/status/ready": {
-            "get": {
-                "description": "This is to get the readiness of AcaPy Agent",
-                "operationId": "status-readiness",
-                "summary": "Readiness check",
+        "/transactions/{conn_id}/set-endorser-info": {
+            "post": {
+                "description": "Set Endorser Info",
+                "operationId": "post-transactions-conn_id-set-endorser-info-endorser_did-endorser_did",
+                "summary": "Set Endorser Info",
+                "tags": [
+                    "endorse-transaction"
+                ],
+                "parameters": [
+                    {
+                        "name": "conn_id",
+                        "in": "path",
+                        "description": "Connection identifier",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "endorser_did",
+                        "in": "query",
+                        "description": "Endorser DID",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "endorser_name",
+                        "in": "query",
+                        "description": "Endorser Name",
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
                 "responses": {
                     "200": {
-                        "description": null
+                        "description": "null",
+                        "schema": {
+                            "$ref": "#/definitions/EndorserInfo"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "endorser_did": "string",
+                                "endorser_name": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/{conn_id}/set-endorser-role": {
+            "post": {
+                "description": "Set transaction jobs",
+                "operationId": "post-transactions-conn_id-set-endorser-role",
+                "summary": "Set transaction jobs",
+                "tags": [
+                    "endorse-transaction"
+                ],
+                "parameters": [
+                    {
+                        "name": "conn_id",
+                        "in": "path",
+                        "description": "Connection identifier",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "transaction_my_job",
+                        "in": "query",
+                        "description": "Transaction related jobs",
+                        "type": "string",
+                        "enum": [
+                            "TRANSACTION_AUTHOR",
+                            "TRANSACTION_ENDORSER",
+                            "reset"
+                        ]
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "null",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionJobs"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "transaction_my_job": "TRANSACTION_AUTHOR",
+                                "transaction_their_job": "TRANSACTION_AUTHOR"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/{tran_id}": {
+            "get": {
+                "description": "Fetch a single transaction record",
+                "operationId": "get-transactions-tran_id",
+                "summary": "Fetch a single transaction record",
+                "tags": [
+                    "endorse-transaction"
+                ],
+                "parameters": [
+                    {
+                        "name": "tran_id",
+                        "in": "path",
+                        "description": "Transaction identifier",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "null",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionRecord"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "_type": "101",
+                                "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "created_at": "2021-12-31 23:59:59Z",
+                                "endorser_write_txn": true,
+                                "formats": [
+                                    {
+                                        "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "format": "dif/endorse-transaction/request@v1.0"
+                                    }
+                                ],
+                                "messages_attach": [
+                                    {
+                                        "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                                        "data": {
+                                            "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                                        },
+                                        "mime-type": "application/json"
+                                    }
+                                ],
+                                "signature_request": [
+                                    {
+                                        "author_goal_code": "transaction.ledger.write",
+                                        "context": "did:sov",
+                                        "method": "add-signature",
+                                        "signature_type": "<requested signature type>",
+                                        "signer_goal_code": "transaction.endorse"
+                                    }
+                                ],
+                                "signature_response": [
+                                    {
+                                        "context": "did:sov",
+                                        "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "method": "add-signature",
+                                        "signer_goal_code": "transaction.refuse"
+                                    }
+                                ],
+                                "state": "active",
+                                "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "timing": {
+                                    "expires_time": "2020-12-13T17:29:06+00:00"
+                                },
+                                "trace": true,
+                                "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "updated_at": "2021-12-31 23:59:59Z"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/{tran_id}/cancel": {
+            "post": {
+                "description": "For Author to cancel a particular transaction request",
+                "operationId": "post-transactions-tran_id-cancel",
+                "summary": "For Author to cancel a particular transaction request",
+                "tags": [
+                    "endorse-transaction"
+                ],
+                "parameters": [
+                    {
+                        "name": "tran_id",
+                        "in": "path",
+                        "description": "Transaction identifier",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "null",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionRecord"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "_type": "101",
+                                "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "created_at": "2021-12-31 23:59:59Z",
+                                "endorser_write_txn": true,
+                                "formats": [
+                                    {
+                                        "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "format": "dif/endorse-transaction/request@v1.0"
+                                    }
+                                ],
+                                "messages_attach": [
+                                    {
+                                        "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                                        "data": {
+                                            "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                                        },
+                                        "mime-type": "application/json"
+                                    }
+                                ],
+                                "signature_request": [
+                                    {
+                                        "author_goal_code": "transaction.ledger.write",
+                                        "context": "did:sov",
+                                        "method": "add-signature",
+                                        "signature_type": "<requested signature type>",
+                                        "signer_goal_code": "transaction.endorse"
+                                    }
+                                ],
+                                "signature_response": [
+                                    {
+                                        "context": "did:sov",
+                                        "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "method": "add-signature",
+                                        "signer_goal_code": "transaction.refuse"
+                                    }
+                                ],
+                                "state": "active",
+                                "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "timing": {
+                                    "expires_time": "2020-12-13T17:29:06+00:00"
+                                },
+                                "trace": true,
+                                "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "updated_at": "2021-12-31 23:59:59Z"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/{tran_id}/endorse": {
+            "post": {
+                "description": "For Endorser to endorse a particular transaction record",
+                "operationId": "post-transactions-tran_id-endorse",
+                "summary": "For Endorser to endorse a particular transaction record",
+                "tags": [
+                    "endorse-transaction"
+                ],
+                "parameters": [
+                    {
+                        "name": "tran_id",
+                        "in": "path",
+                        "description": "Transaction identifier",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "null",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionRecord"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "_type": "101",
+                                "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "created_at": "2021-12-31 23:59:59Z",
+                                "endorser_write_txn": true,
+                                "formats": [
+                                    {
+                                        "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "format": "dif/endorse-transaction/request@v1.0"
+                                    }
+                                ],
+                                "messages_attach": [
+                                    {
+                                        "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                                        "data": {
+                                            "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                                        },
+                                        "mime-type": "application/json"
+                                    }
+                                ],
+                                "signature_request": [
+                                    {
+                                        "author_goal_code": "transaction.ledger.write",
+                                        "context": "did:sov",
+                                        "method": "add-signature",
+                                        "signature_type": "<requested signature type>",
+                                        "signer_goal_code": "transaction.endorse"
+                                    }
+                                ],
+                                "signature_response": [
+                                    {
+                                        "context": "did:sov",
+                                        "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "method": "add-signature",
+                                        "signer_goal_code": "transaction.refuse"
+                                    }
+                                ],
+                                "state": "active",
+                                "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "timing": {
+                                    "expires_time": "2020-12-13T17:29:06+00:00"
+                                },
+                                "trace": true,
+                                "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "updated_at": "2021-12-31 23:59:59Z"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/{tran_id}/refuse": {
+            "post": {
+                "description": "For Endorser to refuse a particular transaction record",
+                "operationId": "post-transactions-tran_id-refuse",
+                "summary": "For Endorser to refuse a particular transaction record",
+                "tags": [
+                    "endorse-transaction"
+                ],
+                "parameters": [
+                    {
+                        "name": "tran_id",
+                        "in": "path",
+                        "description": "Transaction identifier",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "null",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionRecord"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "_type": "101",
+                                "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "created_at": "2021-12-31 23:59:59Z",
+                                "endorser_write_txn": true,
+                                "formats": [
+                                    {
+                                        "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "format": "dif/endorse-transaction/request@v1.0"
+                                    }
+                                ],
+                                "messages_attach": [
+                                    {
+                                        "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                                        "data": {
+                                            "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                                        },
+                                        "mime-type": "application/json"
+                                    }
+                                ],
+                                "signature_request": [
+                                    {
+                                        "author_goal_code": "transaction.ledger.write",
+                                        "context": "did:sov",
+                                        "method": "add-signature",
+                                        "signature_type": "<requested signature type>",
+                                        "signer_goal_code": "transaction.endorse"
+                                    }
+                                ],
+                                "signature_response": [
+                                    {
+                                        "context": "did:sov",
+                                        "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "method": "add-signature",
+                                        "signer_goal_code": "transaction.refuse"
+                                    }
+                                ],
+                                "state": "active",
+                                "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "timing": {
+                                    "expires_time": "2020-12-13T17:29:06+00:00"
+                                },
+                                "trace": true,
+                                "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "updated_at": "2021-12-31 23:59:59Z"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/transactions/{tran_id}/write": {
+            "post": {
+                "description": "For Author / Endorser to write an endorsed transaction to the ledger",
+                "operationId": "post-transactions-tran_id-write",
+                "summary": "For Author / Endorser to write an endorsed transaction to the ledger",
+                "tags": [
+                    "endorse-transaction"
+                ],
+                "parameters": [
+                    {
+                        "name": "tran_id",
+                        "in": "path",
+                        "description": "Transaction identifier",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "null",
+                        "schema": {
+                            "$ref": "#/definitions/TransactionRecord"
+                        },
+                        "examples": {
+                            "application/json": {
+                                "_type": "101",
+                                "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "created_at": "2021-12-31 23:59:59Z",
+                                "endorser_write_txn": true,
+                                "formats": [
+                                    {
+                                        "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "format": "dif/endorse-transaction/request@v1.0"
+                                    }
+                                ],
+                                "messages_attach": [
+                                    {
+                                        "@id": "143c458d-1b1c-40c7-ab85-4d16808ddf0a",
+                                        "data": {
+                                            "json": "{\"endorser\": \"V4SGRU86Z58d6TV7PBUe6f\",\"identifier\": \"LjgpST2rjsoxYegQDRm7EL\",\"operation\": {\"data\": {\"attr_names\": [\"first_name\", \"last_name\"],\"name\": \"test_schema\",\"version\": \"2.1\",},\"type\": \"101\",},\"protocolVersion\": 2,\"reqId\": 1597766666168851000,\"signatures\": {\"LjgpST2rjsox\": \"4ATKMn6Y9sTgwqaGTm7py2c2M8x1EVDTWKZArwyuPgjU\"},\"taaAcceptance\": {\"mechanism\": \"manual\",\"taaDigest\": \"f50fe2c2ab977006761d36bd6f23e4c6a7e0fc2feb9f62\",\"time\": 1597708800,}}"
+                                        },
+                                        "mime-type": "application/json"
+                                    }
+                                ],
+                                "signature_request": [
+                                    {
+                                        "author_goal_code": "transaction.ledger.write",
+                                        "context": "did:sov",
+                                        "method": "add-signature",
+                                        "signature_type": "<requested signature type>",
+                                        "signer_goal_code": "transaction.endorse"
+                                    }
+                                ],
+                                "signature_response": [
+                                    {
+                                        "context": "did:sov",
+                                        "message_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                        "method": "add-signature",
+                                        "signer_goal_code": "transaction.refuse"
+                                    }
+                                ],
+                                "state": "active",
+                                "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "timing": {
+                                    "expires_time": "2020-12-13T17:29:06+00:00"
+                                },
+                                "trace": true,
+                                "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "updated_at": "2021-12-31 23:59:59Z"
+                            }
+                        }
                     }
                 }
             }
@@ -7895,6 +8569,9 @@
                     "type": "string",
                     "example": "2021-03-29T05:22:19+00:00"
                 }
+            },
+            "example": {
+                "expires_time": "2021-03-29T05:22:19+00:00"
             }
         },
         "Doc": {
