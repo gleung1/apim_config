@@ -6039,6 +6039,18 @@
                         "required": true,
                         "type": "string",
                         "pattern": "^(did:sov:)?[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}$"
+                    }, {
+                        "name" : "conn_id",
+                        "in" : "query",
+                        "description" : "Connection identifier",
+                        "required" : false,
+                        "type" : "string"
+                        }, {
+                        "name" : "create_transaction_for_endorser",
+                        "in" : "query",
+                        "description" : "Create Transaction For Endorser's signature",
+                        "required" : false,
+                        "type" : "boolean"
                     }
                 ],
                 "produces": [
